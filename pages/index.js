@@ -12,9 +12,20 @@ export default function Home() {
     setInput("");
   };
 
+  const handleBackspace = () => {
+    setInput((prev) => prev.slice(0, -1));
+  };
+
   const handleCalculate = () => {
     try {
-      setInput(eval(input).toString());
+      // basic sanitization: allow only digits, operators and dots
+      if (!/^[0-9+\-*/.() ]+$/.test(input)) {
+        setInput("Lỗi");
+        return;
+      }
+      // eslint-disable-next-line no-eval
+      const result = eval(input);
+      setInput(String(result));
     } catch {
       setInput("Lỗi");
     }
@@ -26,6 +37,7 @@ export default function Home() {
         <div className={styles.display}>{input || "0"}</div>
         <div className={styles.buttonGrid}>
           <button className={`${styles.button} ${styles.function}`} onClick={handleClear}>C</button>
+          <button className={`${styles.button} ${styles.function}`} onClick={handleBackspace}>⌫</button>
           <button className={`${styles.button} ${styles.operator}`} onClick={() => handleClick("/")}>÷</button>
           <button className={`${styles.button} ${styles.operator}`} onClick={() => handleClick("*")}>×</button>
           <button className={`${styles.button} ${styles.operator}`} onClick={() => handleClick("-")}>−</button>
