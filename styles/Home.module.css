@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(to right, #ece9e6, #ffffff);
+  background: linear-gradient(to right, #ece9e6, #000000);
 }
 
 .calculator {
@@ -65,5 +65,5 @@
   background-color: #ff0000;
 }
 .equals:hover {
-  background-color: #0800ff;
+  background-color: #000000;
 }
