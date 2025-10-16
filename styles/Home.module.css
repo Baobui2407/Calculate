@@ -3,11 +3,11 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(to right, #ece9e6, #000000);
+  background: linear-gradient(to right, #ffffff, #000000);
 }
 
 .calculator {
-  background-color: #fff;
+  background-color: #0f0f0f;
   padding: 30px;
   border-radius: 20px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -15,13 +15,20 @@
 }
 
 .display {
-  background-color: #000000;
+  background-color: #ffffff48;
   padding: 20px;
   font-size: 32px;
   text-align: right;
   border-radius: 12px;
   margin-bottom: 20px;
   font-family: 'Courier New', Courier, monospace;
+  /* prevent overflow */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .buttonGrid {
@@ -41,29 +48,29 @@
 
 
 .number {
-  background-color: #000000;
+  background-color: #71716c;
 }
 .number:hover {
-  background-color: #000000;
+  background-color: #ffffff48;
 }
 
 .operator {
-  background-color: #ff0000;
+  background-color: #e1da11;
 }
 .operator:hover {
-  background-color: #ff0000;
+  background-color: #b6abab;
 }
 
 .function {
-  background-color: #ff0000;
+  background-color: #e1da11;
 }
 .function:hover {
-  background-color: #f50000;
+  background-color: #b6abab;
 }
 
 .equals {
-  background-color: #ff0000;
+  background-color: #e1da11;
 }
 .equals:hover {
-  background-color: #000000;
+  background-color: #b6abab;
 }

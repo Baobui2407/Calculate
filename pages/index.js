@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
   const [input, setInput] = useState("");
+  const displayRef = useRef(null);
+  const [displayFontSize, setDisplayFontSize] = useState(32);
 
   const handleClick = (value) => {
     setInput((prev) => prev + value);
@@ -11,6 +13,28 @@ export default function Home() {
   const handleClear = () => {
     setInput("");
   };
+
+  // adjust display font-size so long numbers fit the display without overflowing
+  useEffect(() => {
+    const el = displayRef.current;
+    if (!el) return;
+
+    // start from a base max font-size and decrease until content fits or we reach a minimum
+    const MAX_FONT = 32;
+    const MIN_FONT = 12;
+    let font = MAX_FONT;
+
+    // set initial font to measure
+    el.style.fontSize = font + "px";
+
+    // reduce font size while the content is wider than the container
+    while (el.scrollWidth > el.clientWidth && font > MIN_FONT) {
+      font -= 1;
+      el.style.fontSize = font + "px";
+    }
+
+    setDisplayFontSize(font);
+  }, [input]);
 
   const handleBackspace = () => {
     setInput((prev) => prev.slice(0, -1));
@@ -34,7 +58,13 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.calculator}>
-        <div className={styles.display}>{input || "0"}</div>
+        <div
+          className={styles.display}
+          ref={displayRef}
+          style={{ fontSize: displayFontSize + "px" }}
+        >
+          {input || "0"}
+        </div>
         <div className={styles.buttonGrid}>
           <button className={`${styles.button} ${styles.function}`} onClick={handleClear}>C</button>
           <button className={`${styles.button} ${styles.function}`} onClick={handleBackspace}>⌫</button>
