@@ -22,13 +22,6 @@
   border-radius: 12px;
   margin-bottom: 20px;
   font-family: 'Courier New', Courier, monospace;
-  /* prevent overflow */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
 }
 
 .buttonGrid {
@@ -44,13 +37,9 @@
   border-radius: 12px;
   cursor: pointer;
   transition: background-color 0.2s ease;
-}
-
-
-.number {
-  background-color: #71716c;
-}
-.number:hover {
+  /* ensure container hides overflow and provides space for the inner text */
+  overflow: hidden;
+  position: relative;
   background-color: #ffffff48;
 }
 

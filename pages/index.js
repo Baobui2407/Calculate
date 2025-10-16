@@ -3,7 +3,8 @@ import styles from "../styles/Home.module.css";
 
 export default function Home() {
   const [input, setInput] = useState("");
-  const displayRef = useRef(null);
+  const containerRef = useRef(null);
+  const textRef = useRef(null);
   const [displayFontSize, setDisplayFontSize] = useState(32);
 
   const handleClick = (value) => {
@@ -16,21 +17,21 @@ export default function Home() {
 
   // adjust display font-size so long numbers fit the display without overflowing
   useEffect(() => {
-    const el = displayRef.current;
-    if (!el) return;
+    const container = containerRef.current;
+    const textEl = textRef.current;
+    if (!container || !textEl) return;
 
-    // start from a base max font-size and decrease until content fits or we reach a minimum
     const MAX_FONT = 32;
     const MIN_FONT = 12;
     let font = MAX_FONT;
 
-    // set initial font to measure
-    el.style.fontSize = font + "px";
+    // set initial font on the text element
+    textEl.style.fontSize = font + "px";
 
-    // reduce font size while the content is wider than the container
-    while (el.scrollWidth > el.clientWidth && font > MIN_FONT) {
+    // reduce font size while the text's scrollWidth is greater than the container's inner width
+    while (textEl.scrollWidth > container.clientWidth && font > MIN_FONT) {
       font -= 1;
-      el.style.fontSize = font + "px";
+      textEl.style.fontSize = font + "px";
     }
 
     setDisplayFontSize(font);
@@ -58,12 +59,14 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.calculator}>
-        <div
-          className={styles.display}
-          ref={displayRef}
-          style={{ fontSize: displayFontSize + "px" }}
-        >
-          {input || "0"}
+        <div className={styles.display} ref={containerRef}>
+          <span
+            className={styles.displayValue}
+            ref={textRef}
+            style={{ fontSize: displayFontSize + "px" }}
+          >
+            {input || "0"}
+          </span>
         </div>
         <div className={styles.buttonGrid}>
           <button className={`${styles.button} ${styles.function}`} onClick={handleClear}>C</button>
